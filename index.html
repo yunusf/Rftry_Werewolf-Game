@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    <span>Nama: </span>
+    <input type="text" id="namamu">
+    
+    <br>
+    <span>Karakter: </span>
+    <select id="peran">
+        <option value="0"></option>
+        <option value="penyihir">penyihir</option>
+        <option value="guard">guard</option>
+        <option value="werewolf">werewolf</option>
+    </select>
+    <br>
+    <button onclick="olah()">Submit</button>
+    
+    <br><br>
+    <div>
+        Nama: 
+        <div id="t_nama"></div>
+        <br>
+        Karakter:
+        <div id="t_peran"></div>
+        <br>
+        Pemain 2:
+        <div id="pemain_2"></div>
+        <br><br>
+        Hasil:
+        <div id="t_hasil"></div>
+    </div>
+
+    <script>
+        function olah() {
+            const id_nama = document.getElementById("namamu").value;
+            const id_peran = document.getElementById("peran").value;
+            const id_t_nama = document.getElementById("t_nama");
+            const id_t_peran = document.getElementById("t_peran");
+            const id_t_hasil = document.getElementById("t_hasil");
+            
+            if (id_nama == "") {
+                alert("Nama harus diisi");
+            } else if (id_peran == "0") {
+                alert("Pilih Peranmu untuk memulai Game");
+            } else {
+                id_t_nama.innerText = id_nama;
+                id_t_peran.innerText = id_peran;
+            }
+
+            const p_a = Math.random() * 3;
+
+            function pemain_ww(v) {
+                if (v <= 1) {
+                    v = "penyihir";
+                } else if (v >= 2 && v < 3) {
+                    v = "guard";
+                } else if (v){
+                    v = "werewolf";
+                }
+
+                return v;
+            }
+            
+            const pemain_a = pemain_ww(p_a);
+
+            const id_t_pem2 = document.getElementById("pemain_2");
+            id_t_pem2.innerText = pemain_a;
+            
+            function mulai_main(p1, p2) {
+                if(p1 != "werewolf" && p2 != "werewolf") {
+                    hs = "kalian berteman, kamu: " + p1 + ", dan pemain 2: " + p2;
+                } else if(p1 == "werewolf" && p2 == "guard") {
+                    hs = "kamu tidak bisa menyerang warga, karena pemain 2 adalah: " + p2;
+                } else if(p1 == "werewolf" && p2 == "penyihir") {
+                    hs = "kamu dapat menyerang warga, karena pemain 2 adalah: " + p2;
+                } else if(p1 == "guard" && p2 == "werewolf") {
+                    hs = "dia tidak bisa menyerang warga, karena pemain 2 adalah: " + p2;
+                } else if(p1 == "penyihir" && p2 == "werewolf") {
+                    hs = "dia dapat menyerang warga, karena pemain 2 adalah: " + p2;
+                } else {
+                    hs = "kalian berteman, peran kalian: " + p1;
+                }
+                return hs;
+            }
+
+            const hasil_main = mulai_main(id_peran, pemain_a);
+            id_t_hasil.innerText = hasil_main;
+            
+        } 
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>
